@@ -707,14 +707,25 @@ namespace System.Web {
 
             // add the event to the delegate invocation list
             // this keeps non-pipeline ASP.NET hosts working
+            /*添加事件到委托的调用列表
+             * 这个保证了非管道 ASP.NET 主机工作
+             * */
             Events.AddHandler(key, handler);
 
             // For integrated pipeline mode, add events to the IExecutionStep containers only if
             // InitSpecial has completed and InitInternal has not completed.
+            /*
+             * 仅当已经完成InitSpecial和InitInternal尚未完成，
+             * 集成管道模式添加事件到IExecutionStep的容器中
+             * */
             if (IsContainerInitalizationAllowed) {
                 // lookup the module index and add this notification
+                /*寻找module的索引和添加当前的订阅
+                 * */
                 PipelineModuleStepContainer container = GetModuleContainer(CurrentModuleCollectionKey);
                 //WOS 1985878: HttpModule unsubscribing an event handler causes AV in Integrated Mode
+                /*在集成横下HttpModule取消订阅一个事件的处理程序引起AV
+                 * */
                 if (container != null) {
 #if DBG
                     container.DebugModuleName = CurrentModuleCollectionKey;
@@ -1026,203 +1037,251 @@ namespace System.Web {
         //
         // Async event hookup
         //
+        #region Async event hookup
 
-        public void AddOnBeginRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnBeginRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnBeginRequestAsync(bh, eh, null);
         }
 
-        public void AddOnBeginRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnBeginRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventBeginRequest, beginHandler, endHandler, state, RequestNotification.BeginRequest, false, this);
         }
 
-        public void AddOnAuthenticateRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnAuthenticateRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnAuthenticateRequestAsync(bh, eh, null);
         }
 
-        public void AddOnAuthenticateRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnAuthenticateRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventAuthenticateRequest, beginHandler, endHandler, state,
                                    RequestNotification.AuthenticateRequest, false, this);
         }
 
-        public void AddOnPostAuthenticateRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostAuthenticateRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostAuthenticateRequestAsync(bh, eh, null);
         }
 
-        public void AddOnPostAuthenticateRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostAuthenticateRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostAuthenticateRequest, beginHandler, endHandler, state,
                                    RequestNotification.AuthenticateRequest, true, this);
         }
 
-        public void AddOnAuthorizeRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnAuthorizeRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnAuthorizeRequestAsync(bh, eh, null);
         }
 
-        public void AddOnAuthorizeRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnAuthorizeRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventAuthorizeRequest, beginHandler, endHandler, state,
                                    RequestNotification.AuthorizeRequest, false, this);
         }
 
-        public void AddOnPostAuthorizeRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostAuthorizeRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostAuthorizeRequestAsync(bh, eh, null);
         }
 
-        public void AddOnPostAuthorizeRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostAuthorizeRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostAuthorizeRequest, beginHandler, endHandler, state,
                                    RequestNotification.AuthorizeRequest, true, this);
         }
 
-        public void AddOnResolveRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnResolveRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnResolveRequestCacheAsync(bh, eh, null);
         }
 
-        public void AddOnResolveRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnResolveRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventResolveRequestCache, beginHandler, endHandler, state,
                                    RequestNotification.ResolveRequestCache, false, this);
         }
 
-        public void AddOnPostResolveRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostResolveRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostResolveRequestCacheAsync(bh, eh, null);
         }
 
-        public void AddOnPostResolveRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostResolveRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostResolveRequestCache, beginHandler, endHandler, state,
                                    RequestNotification.ResolveRequestCache, true, this);
         }
 
-        public void AddOnMapRequestHandlerAsync(BeginEventHandler bh, EndEventHandler eh) {
-            if (!HttpRuntime.UseIntegratedPipeline) {
+        public void AddOnMapRequestHandlerAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
+            if (!HttpRuntime.UseIntegratedPipeline)
+            {
                 throw new PlatformNotSupportedException(SR.GetString(SR.Requires_Iis_Integrated_Mode));
             }
             AddOnMapRequestHandlerAsync(bh, eh, null);
         }
 
-        public void AddOnMapRequestHandlerAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
-            if (!HttpRuntime.UseIntegratedPipeline) {
+        public void AddOnMapRequestHandlerAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
+            if (!HttpRuntime.UseIntegratedPipeline)
+            {
                 throw new PlatformNotSupportedException(SR.GetString(SR.Requires_Iis_Integrated_Mode));
             }
             AsyncEvents.AddHandler(EventMapRequestHandler, beginHandler, endHandler, state,
                                    RequestNotification.MapRequestHandler, false, this);
         }
 
-        public void AddOnPostMapRequestHandlerAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostMapRequestHandlerAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostMapRequestHandlerAsync(bh, eh, null);
         }
 
-        public void AddOnPostMapRequestHandlerAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostMapRequestHandlerAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostMapRequestHandler, beginHandler, endHandler, state,
                                    RequestNotification.MapRequestHandler, true, this);
         }
 
-        public void AddOnAcquireRequestStateAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnAcquireRequestStateAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnAcquireRequestStateAsync(bh, eh, null);
         }
 
-        public void AddOnAcquireRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnAcquireRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventAcquireRequestState, beginHandler, endHandler, state,
                                    RequestNotification.AcquireRequestState, false, this);
         }
 
-        public void AddOnPostAcquireRequestStateAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostAcquireRequestStateAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostAcquireRequestStateAsync(bh, eh, null);
         }
 
-        public void AddOnPostAcquireRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostAcquireRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostAcquireRequestState, beginHandler, endHandler, state,
                                    RequestNotification.AcquireRequestState, true, this);
         }
 
-        public void AddOnPreRequestHandlerExecuteAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPreRequestHandlerExecuteAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPreRequestHandlerExecuteAsync(bh, eh, null);
         }
 
-        public void AddOnPreRequestHandlerExecuteAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPreRequestHandlerExecuteAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPreRequestHandlerExecute, beginHandler, endHandler, state,
                                    RequestNotification.PreExecuteRequestHandler, false, this);
         }
 
-        public void AddOnPostRequestHandlerExecuteAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostRequestHandlerExecuteAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostRequestHandlerExecuteAsync(bh, eh, null);
         }
 
-        public void AddOnPostRequestHandlerExecuteAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostRequestHandlerExecuteAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostRequestHandlerExecute, beginHandler, endHandler, state,
                                    RequestNotification.ExecuteRequestHandler, true, this);
         }
 
-        public void AddOnReleaseRequestStateAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnReleaseRequestStateAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnReleaseRequestStateAsync(bh, eh, null);
         }
 
-        public void AddOnReleaseRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnReleaseRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventReleaseRequestState, beginHandler, endHandler, state,
                                    RequestNotification.ReleaseRequestState, false, this);
         }
 
-        public void AddOnPostReleaseRequestStateAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostReleaseRequestStateAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostReleaseRequestStateAsync(bh, eh, null);
         }
 
-        public void AddOnPostReleaseRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostReleaseRequestStateAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostReleaseRequestState, beginHandler, endHandler, state,
                                    RequestNotification.ReleaseRequestState, true, this);
         }
 
-        public void AddOnUpdateRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnUpdateRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnUpdateRequestCacheAsync(bh, eh, null);
         }
 
-        public void AddOnUpdateRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnUpdateRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventUpdateRequestCache, beginHandler, endHandler, state,
-                                   RequestNotification.UpdateRequestCache , false, this);
+                                   RequestNotification.UpdateRequestCache, false, this);
         }
 
-        public void AddOnPostUpdateRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnPostUpdateRequestCacheAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnPostUpdateRequestCacheAsync(bh, eh, null);
         }
 
-        public void AddOnPostUpdateRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnPostUpdateRequestCacheAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventPostUpdateRequestCache, beginHandler, endHandler, state,
-                                   RequestNotification.UpdateRequestCache , true, this);
+                                   RequestNotification.UpdateRequestCache, true, this);
         }
 
-        public void AddOnLogRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
-            if (!HttpRuntime.UseIntegratedPipeline) {
+        public void AddOnLogRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
+            if (!HttpRuntime.UseIntegratedPipeline)
+            {
                 throw new PlatformNotSupportedException(SR.GetString(SR.Requires_Iis_Integrated_Mode));
             }
             AddOnLogRequestAsync(bh, eh, null);
         }
 
-        public void AddOnLogRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
-            if (!HttpRuntime.UseIntegratedPipeline) {
+        public void AddOnLogRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
+            if (!HttpRuntime.UseIntegratedPipeline)
+            {
                 throw new PlatformNotSupportedException(SR.GetString(SR.Requires_Iis_Integrated_Mode));
             }
             AsyncEvents.AddHandler(EventLogRequest, beginHandler, endHandler, state,
                                    RequestNotification.LogRequest, false, this);
         }
 
-        public void AddOnPostLogRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
-            if (!HttpRuntime.UseIntegratedPipeline) {
+        public void AddOnPostLogRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
+            if (!HttpRuntime.UseIntegratedPipeline)
+            {
                 throw new PlatformNotSupportedException(SR.GetString(SR.Requires_Iis_Integrated_Mode));
             }
             AddOnPostLogRequestAsync(bh, eh, null);
         }
 
-        public void AddOnPostLogRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
-            if (!HttpRuntime.UseIntegratedPipeline) {
+        public void AddOnPostLogRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
+            if (!HttpRuntime.UseIntegratedPipeline)
+            {
                 throw new PlatformNotSupportedException(SR.GetString(SR.Requires_Iis_Integrated_Mode));
             }
             AsyncEvents.AddHandler(EventPostLogRequest, beginHandler, endHandler, state,
                                    RequestNotification.LogRequest, true, this);
         }
 
-        public void AddOnEndRequestAsync(BeginEventHandler bh, EndEventHandler eh) {
+        public void AddOnEndRequestAsync(BeginEventHandler bh, EndEventHandler eh)
+        {
             AddOnEndRequestAsync(bh, eh, null);
         }
 
-        public void AddOnEndRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state) {
+        public void AddOnEndRequestAsync(BeginEventHandler beginHandler, EndEventHandler endHandler, Object state)
+        {
             AsyncEvents.AddHandler(EventEndRequest, beginHandler, endHandler, state,
                                    RequestNotification.EndRequest, false, this);
-        }
+        } 
+        #endregion
 
         //
         // Public Application virtual methods

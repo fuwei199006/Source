@@ -16,7 +16,7 @@ namespace System.Web {
     //  interface. 
     //  Any changes to one, must be reflected in the other!
     //
-
+    //todo:查询下Flags的作用
     [Flags]
     public enum RequestNotification {
         BeginRequest              = 0x00000001,  // request is beginning

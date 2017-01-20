@@ -48,12 +48,24 @@ namespace System.Web {
         // we'll use the whole 12
         // the arrays are lazily allocated so modules that only
         // subscribe to one type of event will only get one type of step arr
+        /*请求通知是一个DWORD二进制的标识位
+         *所以不会超过12个
+         * 我们不能过少的去做，但为了简化索引我们就使用12个。
+         * 数据使用惰性分配 只有订阅一种类型的事件只能获得一种数组步骤的类型
+         */
         List<HttpApplication.IExecutionStep>[] _moduleSteps;
         List<HttpApplication.IExecutionStep>[] _modulePostSteps;
 
         internal PipelineModuleStepContainer() {
         }
 
+
+        /// <summary>
+        /// 根据RequestNotification的值获得Step列表
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <param name="isPostEvent">是否是PostEvent</param>
+        /// <returns></returns>
         private List<HttpApplication.IExecutionStep> GetStepArray(RequestNotification notification, bool isPostEvent) {
 
 #if DBG
@@ -83,7 +95,12 @@ namespace System.Web {
             
             return stepArray;                
         }
-
+        /// <summary>
+        /// 获得请求对应的列表的事件数量
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <param name="isPostEvent"></param>
+        /// <returns></returns>
         internal int GetEventCount(RequestNotification notification, bool isPostEvent) {
             List<HttpApplication.IExecutionStep> stepArray = GetStepArray(notification, isPostEvent);
             if (null == stepArray) {
@@ -92,7 +109,13 @@ namespace System.Web {
 
            return stepArray.Count; 
         }
-
+        /// <summary>
+        /// 根据索引获得下一个处理事件？
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <param name="isPostEvent"></param>
+        /// <param name="eventIndex"></param>
+        /// <returns></returns>
         internal HttpApplication.IExecutionStep GetNextEvent(RequestNotification notification, bool isPostEvent, int eventIndex) {
             List<HttpApplication.IExecutionStep> stepArray = GetStepArray(notification, isPostEvent);
 
@@ -101,7 +124,12 @@ namespace System.Web {
 
             return stepArray[eventIndex];
         }
-
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <param name="isPostEvent"></param>
+        /// <param name="handler"></param>
         internal void RemoveEvent(RequestNotification notification, bool isPostEvent, Delegate handler) {
 
             // if module instances unregister multiple times, this can fail on subsequent attempts
@@ -193,6 +221,11 @@ namespace System.Web {
         // so 0x00000001 == 0, 0x00000002 == 1, etc.
         // Managed code doesn't support all the request flags so we only translate
         // the ones we deal with to keep the switch table as simple as possible
+        /*在这里我们已经尝试各种技术把一个请求的信息转成对应的索引，但目前为止只有最简单的
+         * switch语句运行最稳定，最大的问题是把单个位转成他对应的位置，如下：
+         * 0x00000001==0，0x00000002==1.示例
+         * 托管的编码不支持所有的请求标识，所以我们只能翻译我们处理的那个，保证switch的数据尽可能的简单
+         * */
         private static int EventToIndex(RequestNotification notification) {
             int index = -1;
 

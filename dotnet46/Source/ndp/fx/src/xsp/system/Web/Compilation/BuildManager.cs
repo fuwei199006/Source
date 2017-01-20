@@ -875,6 +875,10 @@ namespace System.Web.Compilation {
             }
         }
 
+        /// <summary>
+        /// 设定预开始阶段
+        /// </summary>
+        /// <param name="methods"></param>
         private static void InvokePreStartInitMethods(ICollection<MethodInfo> methods) {
             PreStartInitStage = Compilation.PreStartInitStage.DuringPreStartInit;
 
@@ -1174,6 +1178,7 @@ namespace System.Web.Compilation {
 
                 try {
                     // Grab the compilation mutex, since this method accesses the codegen files
+                    //这里有一个Monitor锁实现异步和同步
                     CompilationLock.GetLock(ref gotLock);
 
                     // Check again if there is an exception
@@ -1188,6 +1193,12 @@ namespace System.Web.Compilation {
                     _topLevelFilesCompiledStarted = true;
                     _topLevelAssembliesIndexTable =
                         new Dictionary<String, AssemblyReferenceInfo>(StringComparer.OrdinalIgnoreCase);
+
+                    /*global.asax的编译分为四个阶段。
+                     * TopLevelFiles编译：
+                     * 
+                     * 
+                     * */
 
                     _compilationStage = CompilationStage.TopLevelFiles;
 
@@ -1969,6 +1980,11 @@ namespace System.Web.Compilation {
             return true;
         }
 
+
+        /// <summary>
+        /// 获得Global.asax的编译后的类型
+        /// </summary>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly",
             Justification = "Global Asax is a well-known concept")]
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
@@ -1976,8 +1992,13 @@ namespace System.Web.Compilation {
         public static Type GetGlobalAsaxType() {
             return _theBuildManager.GetGlobalAsaxTypeInternal();
         }
-
+        /// <summary>
+        /// 内部编译方法
+        /// </summary>
+        /// <returns></returns>
         private Type GetGlobalAsaxTypeInternal() {
+
+           //确保已经编译
             EnsureTopLevelFilesCompiled();
 
             if (_globalAsaxBuildResult == null)

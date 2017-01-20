@@ -169,6 +169,7 @@ namespace System.Web.Hosting {
 
                 ISAPIApplicationHost appHost = new ISAPIApplicationHost(appId, appPath, false /*validatePhysicalPath*/);
 
+                //创建环境，包括编译环境
                 ISAPIRuntime isapiRuntime = (ISAPIRuntime)_appManager.CreateObjectInternal(appId, typeof(ISAPIRuntime), appHost, 
                         false /*failIfExists*/, null /*hostingParameters*/);
 

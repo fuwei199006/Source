@@ -1045,7 +1045,12 @@ internal abstract class ISAPIWorkerRequest : HttpWorkerRequest {
     //
     // Public methods
     //
-
+    /// <summary>
+    /// 根据ecb句柄和类型创建WorkRequest
+    /// </summary>
+    /// <param name="ecb"></param>
+    /// <param name="useOOP"></param>
+    /// <returns></returns>
     internal static ISAPIWorkerRequest CreateWorkerRequest(IntPtr ecb, bool useOOP) {
 
         ISAPIWorkerRequest wr = null;

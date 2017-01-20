@@ -106,6 +106,7 @@ namespace System.Web {
                 try {
                     _appFilename = GetApplicationFile();
 
+                    //编译
                     CompileApplication();
                 }
                 finally {
@@ -186,14 +187,18 @@ namespace System.Web {
                 }
             }
         }
-
+        /// <summary>
+        /// 获得Global.asax文件
+        /// </summary>
+        /// <returns></returns>
         internal static String GetApplicationFile() {
             return Path.Combine(HttpRuntime.AppDomainAppPathInternal, applicationFileName);
         }
 
         private void CompileApplication() {
             // Get the Application Type and AppState from the global file
-
+            /*从global文件中获得当前Application的类型和appState
+             * */
             _theApplicationType = BuildManager.GetGlobalAsaxType();
 
             BuildResultCompiledGlobalAsaxType result = BuildManager.GetGlobalAsaxBuildResult();
@@ -647,7 +652,10 @@ namespace System.Web {
             // Check to see if it's a debug auto-attach request
             if (context.Request.IsDebuggingRequest)
                 return new HttpDebugHandler();
-
+            /*
+             * 初始化_theApplicationFactory
+             * 创建Application
+             * */
             _theApplicationFactory.EnsureInited();
 
             _theApplicationFactory.EnsureAppStartCalled(context);
