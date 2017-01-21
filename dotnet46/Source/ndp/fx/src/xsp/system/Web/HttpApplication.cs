@@ -2043,6 +2043,7 @@ namespace System.Web {
                 // Call the AddXXX() to hook up the delegate
 
                 try {
+                    //todo:此处调用Module里面的方法
                     addMethod.Invoke(target, new Object[1]{handlerDelegate});
                 }
                 catch {

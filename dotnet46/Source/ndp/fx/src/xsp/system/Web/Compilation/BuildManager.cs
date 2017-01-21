@@ -985,9 +985,12 @@ namespace System.Web.Compilation {
             return method;
         }
 
-        // excludedSubdirectories contains a list of subdirectory names that should not be
+        // excluded Subdirectories contains a list of subdirectory names that should not be
         // recursively included in the compilation (they'll instead be compiled into their
         // own assemblies).
+        /*排除子目录包含子目录名称的列表 
+         * 不应以递归方式包括在汇编(相反，它们会被编译成自己的程序集)。
+         * */
         private Assembly CompileCodeDirectory(VirtualPath virtualDir, CodeDirectoryType dirType,
             string assemblyName, StringSet excludedSubdirectories) {
 
@@ -1196,13 +1199,16 @@ namespace System.Web.Compilation {
 
                     /*global.asax的编译分为四个阶段。
                      * TopLevelFiles编译：
-                     * 
-                     * 
+                     *   PreTopLevelFiles = 0,       // Before EnsureTopLevelFilesCompiled() is called
+                        TopLevelFiles = 1,          // In EnsureTopLevelFilesCompiled() but before building global.asax
+                        GlobalAsax = 2,             // While building global.asax
+                        BrowserCapabilities = 3,    // While building browserCap
+                        AfterTopLevelFiles = 4      // After EnsureTopLevelFilesCompiled() is called
                      * */
 
                     _compilationStage = CompilationStage.TopLevelFiles;
 
-                    CompileResourcesDirectory();
+                    CompileResourcesDirectory();//
                     CompileWebRefDirectory();
                     CompileCodeDirectories();
 
