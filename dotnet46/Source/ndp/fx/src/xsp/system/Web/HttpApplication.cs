@@ -4034,22 +4034,27 @@ namespace System.Web {
 
                 // add special steps that don't currently
                 // correspond to a configured handler
-
+                /*
+                 * 添加一个特殊的步骤，用于不适应当前的处理程序
+                 * */
                 IExecutionStep materializeStep = new MaterializeHandlerExecutionStep(app);
 
                 // implicit map step
+                //隐式映射步骤
                 app.AddEventMapping(
                     HttpApplication.IMPLICIT_HANDLER,
                     RequestNotification.MapRequestHandler,
                     false, materializeStep);
 
                 // implicit async preload step
+                //隐匿同步预加载步骤
                 app.AddEventMapping(
                     HttpApplication.IMPLICIT_HANDLER,
                     RequestNotification.ExecuteRequestHandler,
                     false, app.CreateImplicitAsyncPreloadExecutionStep());
 
                 // implicit handler routing step
+                //隐式处理程序的路由步骤
                 IExecutionStep handlerStep = new CallHandlerExecutionStep(app);
 
                 app.AddEventMapping(
@@ -4058,6 +4063,7 @@ namespace System.Web {
                     false, handlerStep);
 
                 // implicit handler WebSockets step
+                //隐式处理webSockets步骤
                 IExecutionStep webSocketsStep = new TransitionToWebSocketsExecutionStep(app);
 
                 app.AddEventMapping(
@@ -4066,15 +4072,18 @@ namespace System.Web {
                     true /* isPostNotification */, webSocketsStep);
 
                 // add implicit request filtering step
+                //添加隐式请求过滤步骤
                 IExecutionStep filterStep = new CallFilterExecutionStep(app);
 
                 // normally, this executes during UpdateRequestCache as a high priority module
+                //通常，在UpdateRequestCache周期的运行是高优先级模块。
                 app.AddEventMapping(
                     HttpApplication.IMPLICIT_FILTER_MODULE,
                     RequestNotification.UpdateRequestCache,
                     false, filterStep);
 
                 // for error conditions, this executes during LogRequest as a high priority module
+                //对于错误的状态，在LogRequest运行的程序 是一个高优先级模块。
                 app.AddEventMapping(
                     HttpApplication.IMPLICIT_FILTER_MODULE,
                     RequestNotification.LogRequest,
