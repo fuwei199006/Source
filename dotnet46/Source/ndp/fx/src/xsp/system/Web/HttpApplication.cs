@@ -1344,6 +1344,7 @@ namespace System.Web {
                 memo = pathData.CachedHandler;
 
                 // Invalidate cache on missmatch
+                //没有匹配到正确的缓存 
                 if (memo != null && !memo.IsMatch(requestType, path)) {
                     memo = null;
                 }
@@ -1352,8 +1353,12 @@ namespace System.Web {
             // Get new mapping
             if (memo == null) {
                 // Load from config
+                /*有一个疑问，此处读取配置文件，但配置文件里面却没有类型modules的定义？
+                 * 可能是经典管道模式
+                 * */
                 HttpHandlersSection map = useAppConfig ? RuntimeConfig.GetAppConfig().HttpHandlers
                                                        : RuntimeConfig.GetConfig(context).HttpHandlers;
+
                 mapping = map.FindMapping(requestType, path);
 
                 // Add cache entry
@@ -4017,6 +4022,11 @@ namespace System.Web {
             internal PipelineStepManager(HttpApplication app): base(app) {
             }
 
+
+            /// <summary>
+            /// 集成模式下管道事件注册 
+            /// </summary>
+            /// <param name="stepCallback"></param>
             internal override void BuildSteps(WaitCallback stepCallback) {
                 Debug.Trace("PipelineRuntime", "BuildSteps");
                 //ArrayList steps = new ArrayList();
