@@ -149,7 +149,11 @@
                 (VPP.FileExists(requestPath) ||
                 VPP.DirectoryExists(requestPath)));
         }
-
+        /// <summary>
+        /// 获得路由的信息
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public RouteData GetRouteData(HttpContextBase httpContext) {
             if (httpContext == null) {
                 throw new ArgumentNullException("httpContext");
@@ -182,6 +186,8 @@
 
             // Go through all the configured routes and find the first one that returns a match
             using (GetReadLock()) {
+                //RouteCollection 如何赋值，作用是什么?
+
                 foreach (RouteBase route in this) {
                     RouteData routeData = route.GetRouteData(httpContext);
                     if (routeData != null) {
