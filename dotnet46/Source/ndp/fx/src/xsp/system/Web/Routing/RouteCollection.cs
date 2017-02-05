@@ -186,8 +186,16 @@
 
             // Go through all the configured routes and find the first one that returns a match
             using (GetReadLock()) {
-                //RouteCollection 如何赋值，作用是什么?
-
+        //        //RouteCollection 如何赋值，作用是什么?
+        //          public static void RegisterRoutes(RouteCollection routes)
+        //{
+        //    routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        //    routes.MapRoute(
+        //        name: "Default",
+        //        url: "{controller}/{action}/{id}",
+        //        defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+        //    );
+        //}
                 foreach (RouteBase route in this) {
                     RouteData routeData = route.GetRouteData(httpContext);
                     if (routeData != null) {
