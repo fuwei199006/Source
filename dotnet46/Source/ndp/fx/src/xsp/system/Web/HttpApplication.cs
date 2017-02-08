@@ -1718,7 +1718,12 @@ namespace System.Web {
         //
         //
         //
-
+        /// <summary>
+        /// 构建HttpApplication的步骤初始化和HttpModule
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="state"></param>
+        /// <param name="handlers"></param>
         internal void InitInternal(HttpContext context, HttpApplicationState state, MethodInfo[] handlers) {
             Debug.Assert(context != null, "context != null");
 

@@ -376,6 +376,7 @@ namespace System.Web {
                 app = (HttpApplication)HttpRuntime.CreateNonPublicInstance(_theApplicationType);
 
                 using (new ApplicationImpersonationContext()) {
+                   // µ÷ÓÃBuildSteps
                     app.InitInternal(context, _state, _eventHandlerMethods);
                 }
             }
