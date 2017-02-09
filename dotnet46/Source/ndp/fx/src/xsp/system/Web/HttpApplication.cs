@@ -2906,6 +2906,12 @@ namespace System.Web {
             }
         }
 
+
+        /// <summary>
+        /// 获得所有的Module
+        /// </summary>
+        /// <param name="appContext"></param>
+        /// <returns></returns>
         private HttpModuleCollection GetModuleCollection(IntPtr appContext) {
             if (_moduleConfigInfo != null) {
                 return BuildIntegratedModuleCollection(_moduleConfigInfo);

@@ -376,7 +376,7 @@ namespace System.Web {
                 app = (HttpApplication)HttpRuntime.CreateNonPublicInstance(_theApplicationType);
 
                 using (new ApplicationImpersonationContext()) {
-                   // 调用BuildSteps
+                   // 调用BuildSteps和获得所有的HttpModule
                     app.InitInternal(context, _state, _eventHandlerMethods);
                 }
             }
