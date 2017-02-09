@@ -47,7 +47,7 @@ namespace System.Web.Hosting
         void StopProcessing();
 
 
-        /// <devdoc>
+        /// <devdoc> 
         ///    <para>[To be supplied.]</para>
         /// </devdoc>
         [SecurityPermission(SecurityAction.LinkDemand, Unrestricted = true)] // DevDiv #180492
