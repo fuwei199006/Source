@@ -2970,7 +2970,7 @@ namespace System.Web {
                 if (pBstrModulePrecondition != IntPtr.Zero) {
                     Marshal.FreeBSTR(pBstrModulePrecondition);
                     pBstrModulePrecondition = IntPtr.Zero;
-                }
+                } 
             }
 
             // now that the static list has been processed, add in the dynamic module list
