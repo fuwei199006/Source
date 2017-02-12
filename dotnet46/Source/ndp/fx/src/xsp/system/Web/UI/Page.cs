@@ -5555,7 +5555,11 @@ window.onload = WebForm_RestoreScrollPosition;
                     {
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin LoadState");
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_VIEWSTATE_ENTER, _context.WorkerRequest);
+
+                        //2===========
                         LoadAllState();
+                        //===========
+
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_VIEWSTATE_LEAVE, _context.WorkerRequest);
                         if (con.TraceIsEnabled)
                         {
@@ -5566,7 +5570,7 @@ window.onload = WebForm_RestoreScrollPosition;
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_POSTDATA_ENTER, _context.WorkerRequest);
 
 
-                        //===================
+                        //2===================
                         ProcessPostData(_requestValueCollection, true /* fBeforeLoad */);
                         //===================
 
@@ -5576,7 +5580,7 @@ window.onload = WebForm_RestoreScrollPosition;
 
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin PreLoad");
 
-                    //===================
+                    //2===================
                     OnPreLoad(EventArgs.Empty);
                     //===================
 
@@ -5585,7 +5589,7 @@ window.onload = WebForm_RestoreScrollPosition;
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin Load");
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_ENTER, _context.WorkerRequest);
 
-                    //===================
+                    //Page_Load方法调用===================
                     LoadRecursive();
                     //===================
 
@@ -5596,7 +5600,11 @@ window.onload = WebForm_RestoreScrollPosition;
                     {
                         // Try process the post data again (ASURT 29045)
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin ProcessPostData Second Try");
+
+                        //2===================
                         ProcessPostData(_leftoverPostData, false /* !fBeforeLoad */);
+                        //===================
+
                         if (con.TraceIsEnabled)
                         {
                             Trace.Write("aspx.page", "End ProcessPostData Second Try");
@@ -5604,7 +5612,11 @@ window.onload = WebForm_RestoreScrollPosition;
                         }
 
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_POST_DATA_CHANGED_ENTER, _context.WorkerRequest);
+
+                        //2===================
                         RaiseChangedEvents();
+                        //===================
+
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_POST_DATA_CHANGED_LEAVE, _context.WorkerRequest);
                         if (con.TraceIsEnabled)
                         {
@@ -5612,14 +5624,18 @@ window.onload = WebForm_RestoreScrollPosition;
                             Trace.Write("aspx.page", "Begin Raise PostBackEvent");
                         }
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_RAISE_POSTBACK_ENTER, _context.WorkerRequest);
+
+                        //2===================
                         RaisePostBackEvent(_requestValueCollection);
+                        //===================
+
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_RAISE_POSTBACK_LEAVE, _context.WorkerRequest);
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "End Raise PostBackEvent");
                     }
 
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin LoadComplete");
 
-                    //===================
+                    //2===================
                     OnLoadComplete(EventArgs.Empty);
                     //===================
 
@@ -5633,13 +5649,17 @@ window.onload = WebForm_RestoreScrollPosition;
                     {
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin PreRender");
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_PRE_RENDER_ENTER, _context.WorkerRequest);
+
+                        //===================
                         PreRenderRecursiveInternal();
+                        //===================
+
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_PRE_RENDER_LEAVE, _context.WorkerRequest);
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "End PreRender");
                     }
                 }
 
-                /// Async Point here
+                // Async Point here
 
                 if (_legacyAsyncInfo == null || _legacyAsyncInfo.CallerIsBlocking)
                 {
@@ -5680,7 +5700,9 @@ window.onload = WebForm_RestoreScrollPosition;
 
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_SAVE_VIEWSTATE_ENTER, _context.WorkerRequest);
 
+                    //===================
                     SaveAllState();
+                    //===================
 
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_SAVE_VIEWSTATE_LEAVE, _context.WorkerRequest);
                     if (con.TraceIsEnabled)

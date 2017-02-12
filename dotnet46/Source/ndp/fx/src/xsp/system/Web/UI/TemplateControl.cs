@@ -387,6 +387,9 @@ public abstract class TemplateControl : Control, INamingContainer, IFilterResolu
         return this;
     }
 
+        /// <summary>
+        /// °ó¶¨Page_load 
+        /// </summary>
     [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "See comment on GetDelegateInformationWithAssert.")]
     internal void HookUpAutomaticHandlers() {
         // Do nothing if auto-events are not supported
