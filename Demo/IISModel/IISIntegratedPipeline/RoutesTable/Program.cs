@@ -9,14 +9,16 @@ namespace RoutesTable
 {
     class Program
     {
+        delegate string MyDelegate(string text);
         static void Main(string[] args)
         {
-            RouteTable.Strs.Add("12312312");
-            RouteTable.Strs.Add("1231");
-            RouteTable.Strs.Add("12");
-            TestConsole.Print();
 
+            MyDelegate initObj = Delegate.CreateDelegate(typeof(MyDelegate), typeof(MyClass), "Print") as MyDelegate;
+            var res=initObj("addd");
+            Console.WriteLine(res);
             Console.Read();
+
+
         }
     }
 }

@@ -3164,7 +3164,7 @@ namespace System.Web.Compilation {
         /// </devdoc>
         internal static object CreateInstanceFromVirtualPath(VirtualPath virtualPath,
             Type requiredBaseType, HttpContext context, bool allowCrossApp) {
-
+            //创建 System.Web.Compilation.BuildResultCompiledType类型对象
             ITypedWebObjectFactory objectFactory = GetVirtualPathObjectFactory(virtualPath, context, allowCrossApp);
             if (objectFactory == null) return null;
 
@@ -3176,7 +3176,10 @@ namespace System.Web.Compilation {
 
             Object instance;
             using (new ClientImpersonationContext(context)) {
-                instance = objectFactory.CreateInstance();
+
+                //objectFactory类型为 System.Web.Compilation.BuildResultCompiledType
+                
+                   instance = objectFactory.CreateInstance();
             }
 
             return instance;

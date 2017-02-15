@@ -3374,10 +3374,12 @@ namespace System.Web {
                 }
 
                 if (!String.IsNullOrEmpty(configType)) {
+                    //PageHandlerFactory???
                     IHttpHandlerFactory factory = _application.GetFactory(configType);
                     string pathTranslated = request.PhysicalPathInternal;
 
                     try {
+                       
                         handler = factory.GetHandler(context, request.RequestType, request.FilePath, pathTranslated);
                     }
                     catch (FileNotFoundException e) {

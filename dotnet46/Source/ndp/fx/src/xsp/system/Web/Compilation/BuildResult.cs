@@ -866,6 +866,7 @@ internal class BuildResultCompiledType : BuildResultCompiledAssemblyBase, ITyped
     }
 
     // IWebObjectFactory.CreateInstance
+    //把WebForm Page编译成新的Dll
     public object CreateInstance() {
 
         // Get the fast object creation delegate on demand
