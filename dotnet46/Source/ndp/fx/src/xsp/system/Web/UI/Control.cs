@@ -1699,7 +1699,15 @@ namespace System.Web.UI {
 
         // !! IMPORTANT !!
         // If you make changes to this method, also change InitRecursiveAsync.
-        internal virtual void InitRecursive(Control namingContainer) {
+
+        /// <summary>
+        /// 过递归调用子控件的初始化方法，完成了控件集合中所有控件的初始化操作。
+        /// 并生成对应的ID
+        /// 调用Init的方法
+        /// </summary>
+        /// <param name="namingContainer"></param>
+        internal virtual void InitRecursive(Control namingContainer)
+        {
             ResolveAdapter();
             if (_controls != null) {
                 if (flags[isNamingContainer]) {

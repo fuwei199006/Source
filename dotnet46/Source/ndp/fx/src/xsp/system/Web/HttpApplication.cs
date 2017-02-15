@@ -2250,6 +2250,7 @@ namespace System.Web {
 
         /*
          * Execute single step catching exceptions in a fancy way (see below)
+         * webform根据url反射创建Page对象，转成IHttpHandler对象
          */
         internal Exception ExecuteStep(IExecutionStep step, ref bool completedSynchronously) {
             Exception error = null;

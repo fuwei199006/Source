@@ -4929,7 +4929,11 @@ window.onload = WebForm_RestoreScrollPosition;
         /// 
 
 
-
+           
+        /// OnPreInit事件执行 
+        //初始化样式 
+        //应用模板页 
+    
         private void PerformPreInit()
         {
             OnPreInit(EventArgs.Empty);
@@ -5163,7 +5167,7 @@ window.onload = WebForm_RestoreScrollPosition;
             {
                 try
                 {
-                    if (IsTransacted)
+                    if (IsTransacted)//如果是事务状态
                     {
                         ProcessRequestTransacted();
                     }
@@ -5526,7 +5530,10 @@ window.onload = WebForm_RestoreScrollPosition;
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin PreInit");
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_PRE_INIT_ENTER, _context.WorkerRequest);
 
-                    //1===============
+                    //===============
+                    //初始化样式 
+                    //应用模板页 
+                    //标志初始化工作完成
                     PerformPreInit();
                     //===============
 
@@ -5536,7 +5543,7 @@ window.onload = WebForm_RestoreScrollPosition;
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin Init");
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_INIT_ENTER, _context.WorkerRequest);
 
-                    //1================
+                    //================
                     InitRecursive(null);
                     //================
 
@@ -5545,18 +5552,20 @@ window.onload = WebForm_RestoreScrollPosition;
 
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin InitComplete");
 
-                    //1===================
+                    //===================
+                    //调用Page_InitComplete方法
                     OnInitComplete(EventArgs.Empty);
                     //===================
 
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "End InitComplete");
 
+                    #region IsPostBack
                     if (IsPostBack)
                     {
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin LoadState");
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_VIEWSTATE_ENTER, _context.WorkerRequest);
 
-                        //2===========
+                        //===========
                         LoadAllState();
                         //===========
 
@@ -5577,10 +5586,12 @@ window.onload = WebForm_RestoreScrollPosition;
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_POSTDATA_LEAVE, _context.WorkerRequest);
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "End ProcessPostData");
                     }
+                    #endregion
 
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin PreLoad");
 
-                    //2===================
+                    //===================
+                    //调用Page_PreLoad方法
                     OnPreLoad(EventArgs.Empty);
                     //===================
 
@@ -5589,13 +5600,13 @@ window.onload = WebForm_RestoreScrollPosition;
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin Load");
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_ENTER, _context.WorkerRequest);
 
-                    //Page_Load方法调用===================
+                    //Page_Load方法调用======= 
                     LoadRecursive();
                     //===================
 
                     if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_LOAD_LEAVE, _context.WorkerRequest);
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "End Load");
-
+                    #region IsPostBack
                     if (IsPostBack)
                     {
                         // Try process the post data again (ASURT 29045)
@@ -5613,7 +5624,7 @@ window.onload = WebForm_RestoreScrollPosition;
 
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_POST_DATA_CHANGED_ENTER, _context.WorkerRequest);
 
-                        //2===================
+                        //===================
                         RaiseChangedEvents();
                         //===================
 
@@ -5625,17 +5636,17 @@ window.onload = WebForm_RestoreScrollPosition;
                         }
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_RAISE_POSTBACK_ENTER, _context.WorkerRequest);
 
-                        //2===================
+                        //===================
                         RaisePostBackEvent(_requestValueCollection);
                         //===================
 
                         if (EtwTrace.IsTraceEnabled(EtwTraceLevel.Verbose, EtwTraceFlags.Page)) EtwTrace.Trace(EtwTraceType.ETW_TYPE_PAGE_RAISE_POSTBACK_LEAVE, _context.WorkerRequest);
                         if (con.TraceIsEnabled) Trace.Write("aspx.page", "End Raise PostBackEvent");
                     }
-
+                    #endregion
                     if (con.TraceIsEnabled) Trace.Write("aspx.page", "Begin LoadComplete");
 
-                    //2===================
+                    //===================
                     OnLoadComplete(EventArgs.Empty);
                     //===================
 
@@ -5643,7 +5654,9 @@ window.onload = WebForm_RestoreScrollPosition;
 
                     if (IsPostBack && IsCallback)
                     {
+                        //===================
                         PrepareCallback(callbackControlId);
+                       // ===================
                     }
                     else if (!IsCrossPagePostBack)
                     {
