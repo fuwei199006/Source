@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutesTable", "RoutesTable\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteLib", "RouteLib\RouteLib.csproj", "{3EBF6D3D-4A47-403E-8F32-2E0C3160E3EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventList", "EventList\EventList.csproj", "{656CD859-6BD4-4B1B-89E8-60A7D1278D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCDemo", "MVCDemo\MVCDemo.csproj", "{D14D134B-A0D3-4603-8AC0-960920BFE081}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{3EBF6D3D-4A47-403E-8F32-2E0C3160E3EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EBF6D3D-4A47-403E-8F32-2E0C3160E3EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EBF6D3D-4A47-403E-8F32-2E0C3160E3EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656CD859-6BD4-4B1B-89E8-60A7D1278D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656CD859-6BD4-4B1B-89E8-60A7D1278D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656CD859-6BD4-4B1B-89E8-60A7D1278D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656CD859-6BD4-4B1B-89E8-60A7D1278D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14D134B-A0D3-4603-8AC0-960920BFE081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14D134B-A0D3-4603-8AC0-960920BFE081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14D134B-A0D3-4603-8AC0-960920BFE081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14D134B-A0D3-4603-8AC0-960920BFE081}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
