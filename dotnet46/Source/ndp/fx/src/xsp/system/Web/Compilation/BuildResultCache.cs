@@ -424,7 +424,15 @@ internal abstract class DiskBuildResultCache: BuildResultCache {
         }
     }
 
-    internal override BuildResult GetBuildResult(string cacheKey, VirtualPath virtualPath, long hashCode, bool ensureIsUpToDate) {
+        /// <summary>
+        ///这里是DiskBuildResultCache编译的方法
+        /// </summary>
+        /// <param name="cacheKey"></param>
+        /// <param name="virtualPath"></param>
+        /// <param name="hashCode"></param>
+        /// <param name="ensureIsUpToDate"></param>
+        /// <returns></returns>
+        internal override BuildResult GetBuildResult(string cacheKey, VirtualPath virtualPath, long hashCode, bool ensureIsUpToDate) {
 
         Debug.Trace("BuildResultCache", "Looking for '" + cacheKey + "' in the disk cache");
         
