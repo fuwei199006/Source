@@ -3178,7 +3178,8 @@ namespace System.Web.Compilation {
             using (new ClientImpersonationContext(context)) {
 
                 //objectFactory¿‡–ÕŒ™ System.Web.Compilation.BuildResultCompiledType
-                
+     
+
                    instance = objectFactory.CreateInstance();
             }
 
