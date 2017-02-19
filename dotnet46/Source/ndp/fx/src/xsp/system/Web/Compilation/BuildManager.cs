@@ -3165,7 +3165,9 @@ namespace System.Web.Compilation {
         internal static object CreateInstanceFromVirtualPath(VirtualPath virtualPath,
             Type requiredBaseType, HttpContext context, bool allowCrossApp) {
             //创建 System.Web.Compilation.BuildResultCompiledType类型对象
-            ITypedWebObjectFactory objectFactory = GetVirtualPathObjectFactory(virtualPath, context, allowCrossApp);
+
+           //System.Web.Compilation.BuildResultCompiledType
+           ITypedWebObjectFactory objectFactory = GetVirtualPathObjectFactory(virtualPath, context, allowCrossApp);
             if (objectFactory == null) return null;
 
             // Make sure it has the required base type (VSWhidbey 516771)
