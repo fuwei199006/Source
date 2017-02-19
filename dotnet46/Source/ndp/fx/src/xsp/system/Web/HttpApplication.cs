@@ -4047,7 +4047,7 @@ namespace System.Web {
                 // add special steps that don't currently
                 // correspond to a configured handler
                 /*
-                 * 添加一个特殊的步骤，用于不适应当前的处理程序
+                 * 添加一个特殊的步骤，用于不适应当前的配置处理程序
                  * */
                 IExecutionStep materializeStep = new MaterializeHandlerExecutionStep(app);
 

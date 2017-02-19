@@ -82,6 +82,8 @@
             // Dev10 766875	Adding RouteData to HttpContext
             context.Request.RequestContext = requestContext;
 
+
+            //如果是MVC应用程序,此处是MvcHandler.
             IHttpHandler httpHandler = routeHandler.GetHttpHandler(requestContext);
             if (httpHandler == null) {
                 throw new InvalidOperationException(

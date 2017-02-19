@@ -27,8 +27,8 @@ namespace System.Web.Mvc
             {
                 throw new ArgumentNullException("requestContext");
             }
-
-            RequestContext = requestContext;
+            throw new Exception();
+            //RequestContext = requestContext;
         }
 
         internal ControllerBuilder ControllerBuilder

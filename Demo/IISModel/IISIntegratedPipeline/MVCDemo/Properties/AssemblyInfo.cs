@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MVCDemo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MVCDemo")]
-[assembly: AssemblyCopyright("版权所有(C) Microsoft 2017")]
+[assembly: AssemblyCopyright("版权所有(C)  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于 typelib 的 ID
-[assembly: Guid("7ab2a931-5a11-4624-a59d-b9e913c1e0b2")]
+[assembly: Guid("3e31e0d7-b8d9-4017-bdeb-956b7791d717")]
 
 // 程序集的版本信息由下列四个值组成:
 //
